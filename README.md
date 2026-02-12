@@ -1,4 +1,4 @@
-# Video Annotation Server
+# Camera Survellince Project
 
 This project provides tools for video annotation using trained YOLO models and a Django-based web interface.
 
