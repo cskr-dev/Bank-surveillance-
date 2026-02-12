@@ -1,7 +1,7 @@
 # Camera Survellince Project
 
 This project provides tools for video annotation using trained YOLO models and a Django-based web interface.
-
+Except the trained model weight parameter remaining all the open source weihts are added. 
 ## Setup
 
 Install dependencies:
