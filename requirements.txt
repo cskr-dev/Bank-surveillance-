@@ -1,0 +1,9 @@
+Django>=3.2,<5
+opencv-python
+ultralytics
+joblib
+numpy
+reportlab
+Pillow
+torch
+torchvision
