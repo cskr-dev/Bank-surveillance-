@@ -1,0 +1,64 @@
+# Video Annotation & Safety Server
+
+This project provides a web-based interface for uploading videos and performing object detection, tracking, and human-tool safety analysis using YOLO models. Suitable for use cases requiring detection and rule-based safety alerts for tools, weapons, or people in video streams.
+
+## Features
+
+- **Web upload & results**: Upload your video, select pipeline, download or preview results.
+- **YOLOv8-based**: Uses state-of-the-art object detection and tracking.
+- **Multiple Pipelines:**
+  - *Infer + SORT*: Frame-wise object detection & tracking with bounding boxes.
+  - *Human-Tool Safety*: Detects and highlights dangerous human-tool interactions; applies safety rules and draws alerts.
+- **PDF Export:** Download a PDF with sampled (1fps) annotated frames.
+- **Metadata driven:** Class names and thresholds are adjustable through json files.
+
+## File/Directory Structure
+
+- `manage.py`: Django project entry point.
+- `annotator/`: Django app with views, forms, pipeline, and HTML templates.
+- `metadata/`: Contains `class_names.json` and `model_metadata.json` for class config.
+- `media/`: Where uploaded and processed videos are stored.
+- `weights/` & `tool_classifier.joblib`: Model artifacts for YOLO/tool classifier.
+- `video_human_tool_safety.py`, `video_infer_sort.py`: Standalone scripts with main pipeline logic.
+- `requirements.txt`: Required packages.
+
+## Quick Start
+
+1. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. **Migrate database and run server:**
+   ```bash
+   python manage.py migrate
+   python manage.py runserver
+   ```
+3. **Open browser:**
+   - Go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+   - Upload a video and choose the desired annotation pipeline.
+   - Preview/download the annotated video or PDF export.
+
+## Pipelines Explained
+
+- **Infer + SORT**: Detects objects (e.g. weapons) and tracks them frame-to-frame. Draws bounding boxes and track IDs.
+- **Human-Tool Safety**: Detects both people and dangerous tools/weapons, applying IOU and center-inside logic to trigger visual alerts or warnings for unsafe interactions.
+
+## Adding or Updating Classes
+
+- Edit `metadata/class_names.json` to add/remove class names (must retrain model for new classes).
+- Model configuration can be updated via files in `metadata/` and `weights/`.
+
+## Requirements
+
+- Python 3.8+
+- See `requirements.txt` for Python package dependencies
+
+## Notes
+
+- All processing happens on CPU (no GPU required by default).
+- Large video files and annotated outputs are stored in `media/`.
+- For production, update settings (SECRET_KEY, DEBUG, ALLOWED_HOSTS, etc.) in `video_server/settings.py`.
+
+## License
+
+See project root for licensing information (customize as needed!).
